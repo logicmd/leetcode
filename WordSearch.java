@@ -1,3 +1,6 @@
+/*
+ * 注意：回溯时候注意标记走过未走过。
+ */
 public class WordSearch {
 
     public static void main(String args[]){
