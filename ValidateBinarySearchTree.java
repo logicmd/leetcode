@@ -19,6 +19,10 @@ public class ValidateBinarySearchTree {
     public boolean isValidBST(TreeNode root) {
         // Start typing your Java solution below
         // DO NOT write main() function
+        if (root.left != null) {
+            if (root.left.val < root.val) {
 
+            }
+        }
     }
 }
