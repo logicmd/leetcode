@@ -1,3 +1,6 @@
+/**
+ * 打表，在纸上画一画
+ */
 public class ZigZag {
 
     public static void main(String args[]){

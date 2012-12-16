@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+// Accepted!
 public class ValidateBinarySearchTree {
 
     public static void main(String args[]){
@@ -14,15 +16,39 @@ public class ValidateBinarySearchTree {
         System.out.println(
             "Hello world"
             );
-        //TLE...
     }
     public boolean isValidBST(TreeNode root) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (root.left != null) {
-            if (root.left.val < root.val) {
+        return validateBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
 
+    public boolean validateBST(TreeNode root, int lowerBound, int upperBound) {
+        if (root != null) {
+            if (root.left != null) {
+                if (root.left.val >= root.val ||
+                    root.left.val <= lowerBound ||
+                    root.left.val >= upperBound) {
+                    return false;
+                }
+                if ( !validateBST(root.left, lowerBound, root.val) ) {
+                    return false;
+                }
+            }
+
+            if (root.right != null) {
+                if (root.right.val <= root.val ||
+                    root.right.val <= lowerBound ||
+                    root.right.val >= upperBound) {
+                    return false;
+                }
+                if ( !validateBST(root.right, root.val, upperBound) ) {
+                    return false;
+                }
             }
         }
+
+        return true;
     }
+
 }
