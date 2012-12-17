@@ -1,4 +1,4 @@
-/*
+/**
  * 注意：回溯时候注意标记走过未走过。
  */
 public class WordSearch {
@@ -36,35 +36,26 @@ public class WordSearch {
         if (word.length() == 0) {
             return true;
         }
-        boolean flag = word.length() == 1 ? true : false;
-        if( i-1 >= 0 && board[i-1][j] == word.charAt(0) ) {
-            board[i-1][j] = ' ';
-            if( flag || find(board, i-1, j, word.substring(1)) )
-            {
-                return true;
+        int[][] direction = {
+            {-1,0},
+            {1,0},
+            {0,-1},
+            {0,1}
+        };
+
+        for ( int m = 0; m < direction.length; m++ ) {
+            int ii = i+direction[m][0];
+            int jj = j+direction[m][1];
+            if( ii >= 0 && ii < board.length &&
+                jj >= 0 && jj < board[i].length &&
+                board[ii][jj] == word.charAt(0) ) {
+                board[ii][jj] = ' ';
+                if( word.length() == 1 ||
+                    find(board, ii, jj, word.substring(1)) ) {
+                    return true;
+                }
+                board[ii][jj] = word.charAt(0);
             }
-            board[i-1][j] = word.charAt(0);
-        }
-        if( i+1 < board.length && board[i+1][j] == word.charAt(0) ) {
-            board[i+1][j] = ' ';
-            if( flag || find(board, i+1, j, word.substring(1)) ) {
-                return true;
-            }
-            board[i+1][j] = word.charAt(0);
-        }
-        if( j+1 < board[i].length && board[i][j+1] == word.charAt(0) ) {
-            board[i][j+1] = ' ';
-            if(  flag || find(board, i, j+1, word.substring(1)) ) {
-                return true;
-            }
-            board[i][j+1] = word.charAt(0);
-        }
-        if( j-1 >= 0 && board[i][j-1] == word.charAt(0) ) {
-            board[i][j-1] = ' ';
-            if( flag || find(board, i, j-1, word.substring(1)) ) {
-                return true;
-            }
-            board[i][j-1] = word.charAt(0);
         }
         return false;
     }
