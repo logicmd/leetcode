@@ -1,5 +1,6 @@
 // Recursion -> Iteration
-public class UniqueBST {
+// Wrong
+public class UniqueBSTRecursive {
 
     public static void main(String args[]){
         UniqueBST m = new UniqueBST();
@@ -22,21 +23,21 @@ public class UniqueBST {
         }
 
 
-        int[] array = new int[n+1];
-        array[0] = 1;
-        array[1] = 1;
-        array[2] = 2;
-
+        int r = 0;
         for (int i = 3; i < n+1; ++i) {
+            int mid = 0;
             for (int j = 0; j < i/2.0; j++) { // 2.0 is so important or i/2 is a int.
-                array[i] += array[j] * array[i-1-j] * 2;
+                r += numTrees(j) * numTrees(i-1-j) * 2;
+                if(j==i/2) {
+                    mid = numTrees(j);
+                }
             }
             if (i%2!=0) {
-                array[i] -= array[i/2] * array[i/2];
+                r -= mid * mid;
             }
         }
 
-        return array[n];
+        return r;
     }
 
 }
