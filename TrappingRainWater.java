@@ -16,11 +16,26 @@ public class TrappingRainWater {
             while (A[pos]==0) {
                 pos++;
             }
-            for (int i = pos; i < A.length; ++i) {
-                if (A[i]==0 && i < A.length-1 && A[i+1]!=0) {
-                    drop++;
+            for (int i = pos; i < A.length; ) {
+                if (A[i]==0 && i < A.length - 1) {
+                    int rain = 0;
+                    boolean back = false;
+                    for (int j = i+1; j < A.length; ++j) {
+                        if (A[j]!=0) {
+                            back = true;
+                            break;
+                        } else {
+                            rain++;
+                        }
+                    }
+                    if (back) {
+                        drop+=rain;
+
+                    }
+
                 } else {
                     A[i]--;
+                    ++i;
                 }
             }
         }
