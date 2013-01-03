@@ -9,15 +9,15 @@ public class SudokuSolver {
         // }
 
         char[][] b = {
-          "53..7....".toCharArray(),
-          "6..195...".toCharArray(),
-          ".98....6.".toCharArray(),
-          "8...6...3".toCharArray(),
-          "4..8.3..1".toCharArray(),
-          "7...2...6".toCharArray(),
-          ".6....28.".toCharArray(),
-          "...419..5".toCharArray(),
-          "....8..79".toCharArray()
+          "..9748...".toCharArray(),
+          "7........".toCharArray(),
+          ".2.1.9...".toCharArray(),
+          "..7...24.".toCharArray(),
+          ".64.1.59.".toCharArray(),
+          ".98...3..".toCharArray(),
+          "...8.3.2.".toCharArray(),
+          "........6".toCharArray(),
+          "...2759..".toCharArray()
         };
         // for (char[] charArray : b) {
         //     for (char c : charArray ) {
@@ -26,21 +26,31 @@ public class SudokuSolver {
         //     System.out.println();
         // }
         m.solveSudoku(b);
+
+        //int[] set = {3,5,6,7,8};
+        // int[] set = {0,0,1,0,1,1,1,1,0};
+        // int[] c = m.getCandidates(set);
+        // for (int i:c) {
+        //     System.out.println(i);
+        // }
+
+        // int i=0, j=2;
+        // getCandidates(board, i, j);
     }
 
     public void solveSudoku(char[][] board) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        // int i=0, j=2;
-        // getCandidates(board, i, j);
-        if(solve(board)) {
-            for (char[] charArray : board) {
-                for (char c : charArray ) {
-                    System.out.print(c);
-                }
-                System.out.println();
-            }
-        }
+
+         if(solve(board)) {
+             for (char[] charArray : board) {
+                 for (char c : charArray ) {
+                     System.out.print(c);
+                 }
+                 System.out.println();
+             }
+         }
+        //solve(board);
 
     }
 
@@ -62,6 +72,9 @@ public class SudokuSolver {
                     }
                 }
             }
+        }
+        if (size == Integer.MAX_VALUE) {
+            return true;
         }
         for ( int i : candidates) {
             board[pos[0]][pos[1]] = (char) (i + '0');
@@ -98,47 +111,40 @@ public class SudokuSolver {
 
     public int[] getSet(int[] row, int[] col, int[] mat) {
         int offset = (int) ('.' - '0');
-        int[] re = new int[10];
+        int[] re = new int[9];
         int c = 0;
         for (int i = 0; i < 9; ++i) {
             if(row[i]!=offset) {
-                if(re[row[i]]==0) {
+                if(re[row[i]-1]==0) {
                     c++;
-                    re[row[i]]=1;
+                    re[row[i]-1]=1;
                 }
             }
             if(col[i]!=offset) {
-                if(re[col[i]]==0) {
+                if(re[col[i]-1]==0) {
                     c++;
-                    re[col[i]]=1;
+                    re[col[i]-1]=1;
                 }
             }
             if(mat[i]!=offset) {
-                if(re[mat[i]]==0) {
+                if(re[mat[i]-1]==0) {
                     c++;
-                    re[mat[i]]=1;
+                    re[mat[i]-1]=1;
                 }
             }
         }
-        int[] set = new int[c];
-        int k = 0;
-        for (int i = 0; i < 10; ++i) {
-            if(re[i]==1) {
-                set[k] = i;
-                k++;
-            }
-        }
-        return set;
+        return re;
     }
-    // set = {3,5,6,7,8}
     public int[] getCandidates(int[] set) {
-        int[] re = new int[9 - set.length];
-        for (int i = 1, j = 0, k = 0; j < set.length; ++i) {
-            if (set[j] == i) {
+        int sum = 0;
+        for ( int k:set ) {
+            sum += k;
+        }
+        int[] re = new int[9 - sum];
+        for ( int i = 0, j = 0; i < set.length; ++i) {
+            if(set[i]==0) {
+                re[j] = i+1;
                 ++j;
-            } else {
-                re[k] = i;
-                ++k;
             }
         }
         return re;
