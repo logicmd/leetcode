@@ -15,29 +15,39 @@ public class TrappingRainWater {
         while(pos < A.length) {
             while (A[pos]==0) {
                 pos++;
+                if(pos==A.length) {
+                    break;
+                }
             }
             for (int i = pos; i < A.length; ) {
                 if (A[i]==0 && i < A.length - 1) {
                     int rain = 0;
-                    boolean back = false;
+                    int back = -1;
                     for (int j = i+1; j < A.length; ++j) {
                         if (A[j]!=0) {
-                            back = true;
+                            back = j;
                             break;
                         } else {
                             rain++;
                         }
                     }
-                    if (back) {
+                    if (back!=-1) {
                         drop+=rain;
-
+                        A[back]--;
+                        i=back+1;
                     }
 
-                } else {
+                } else if (A[i]!=0) {
                     A[i]--;
-                    ++i;
+                    i++;
+                } else {
+                    i++;
+                    //break;
                 }
+                System.out.println(i);
             }
+            System.out.println(pos + " " + drop);
         }
+        return drop;
     }
 }
