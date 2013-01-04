@@ -78,10 +78,12 @@ public class SudokuSolver {
         }
         for ( int i : candidates) {
             board[pos[0]][pos[1]] = (char) (i + '0');
+            System.out.println(pos[0]+" "+pos[1]+" "+i);
             if (solve(board)) {
                 return true;
             }
         }
+        System.out.println("back");
         return false;
 
     }
@@ -112,23 +114,19 @@ public class SudokuSolver {
     public int[] getSet(int[] row, int[] col, int[] mat) {
         int offset = (int) ('.' - '0');
         int[] re = new int[9];
-        int c = 0;
         for (int i = 0; i < 9; ++i) {
             if(row[i]!=offset) {
                 if(re[row[i]-1]==0) {
-                    c++;
                     re[row[i]-1]=1;
                 }
             }
             if(col[i]!=offset) {
                 if(re[col[i]-1]==0) {
-                    c++;
                     re[col[i]-1]=1;
                 }
             }
             if(mat[i]!=offset) {
                 if(re[mat[i]-1]==0) {
-                    c++;
                     re[mat[i]-1]=1;
                 }
             }
@@ -141,7 +139,7 @@ public class SudokuSolver {
             sum += k;
         }
         int[] re = new int[9 - sum];
-        for ( int i = 0, j = 0; i < set.length; ++i) {
+        for (int i = 0, j = 0; i < set.length; ++i) {
             if(set[i]==0) {
                 re[j] = i+1;
                 ++j;
