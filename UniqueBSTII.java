@@ -11,7 +11,7 @@ public class UniqueBSTII {
         // DO NOT write main() function
         ArrayList<TreeNode> l = new ArrayList<TreeNode>();
         if (n==0) {
-            l.add(null);
+            l.add(new TreeNode());
             return l;
         }
         if (n==1) {

@@ -1,15 +1,15 @@
 /*
- * 注意：string相等用equals
+ * WA
  */
 
-public class WildcardMatch {
+public class RegularExpressionMatching {
 
     public static void main(String args[]){
-        WildcardMatch wm = new WildcardMatch();
+        RegularExpressionMatching regexp = new RegularExpressionMatching();
         System.out.println(
-            wm.isMatch(
-                "babaaababaabababbbbbbaabaabbabababbaababbaaabbbaaab",
-                "***bba**a*bbba**aab**b"));
+            regexp.isMatch(
+                "aaa",
+                "ab*ac*a"));
         //TLE...
     }
 
@@ -19,7 +19,7 @@ public class WildcardMatch {
         // Start typing your Java solution below
         // DO NOT write main() function
         p = normalize(p);
-        System.out.println(p);
+        //System.out.println(p);
         return match(s, p);
     }
 
@@ -49,7 +49,7 @@ public class WildcardMatch {
             || (p.equals("") && !s.equals("")) ) {
             return false;
         } else {
-            if ( p.charAt(0) == '?' || s.charAt(0) == p.charAt(0) ) {
+            if ( p.charAt(0) == '.' || s.charAt(0) == p.charAt(0) ) {
                 return match(s.substring(1), p.substring(1));
             } else if ( p.charAt(0) == '*' ) {
                 for (int i=0; i<=s.length(); i++) {
@@ -59,8 +59,8 @@ public class WildcardMatch {
                 }
                 return false;
             }
-            return false;
         }
+        return false;
     }
 
 }
