@@ -1,3 +1,4 @@
+// AC
 public class SudokuSolver {
 
     public static void main(String args[]){
@@ -9,15 +10,16 @@ public class SudokuSolver {
         // }
 
         char[][] b = {
-          "..9748...".toCharArray(),
-          "7........".toCharArray(),
-          ".2.1.9...".toCharArray(),
-          "..7...24.".toCharArray(),
-          ".64.1.59.".toCharArray(),
-          ".98...3..".toCharArray(),
-          "...8.3.2.".toCharArray(),
-          "........6".toCharArray(),
-          "...2759..".toCharArray()
+          "1...7..3.".toCharArray(),
+          "83.6.....".toCharArray(),
+          "..29..6.8".toCharArray(),
+          "6....49.7".toCharArray(),
+          ".9.....5.".toCharArray(),
+          "3.75....4".toCharArray(),
+          "2.3..91..".toCharArray(),
+          ".....2.43".toCharArray(),
+          ".4..8...9".toCharArray()
+
         };
         // for (char[] charArray : b) {
         //     for (char c : charArray ) {
@@ -45,9 +47,9 @@ public class SudokuSolver {
          if(solve(board)) {
              for (char[] charArray : board) {
                  for (char c : charArray ) {
-                     System.out.print(c);
+                     //System.out.print(c);
                  }
-                 System.out.println();
+                 //System.out.println();
              }
          }
         //solve(board);
@@ -78,12 +80,14 @@ public class SudokuSolver {
         }
         for ( int i : candidates) {
             board[pos[0]][pos[1]] = (char) (i + '0');
-            System.out.println(pos[0]+" "+pos[1]+" "+i);
+            //System.out.println(pos[0]+" "+pos[1]+" "+i);
             if (solve(board)) {
                 return true;
+            } else {
+                board[pos[0]][pos[1]] = '.';
             }
         }
-        System.out.println("back");
+        //System.out.println("back");
         return false;
 
     }

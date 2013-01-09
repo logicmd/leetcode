@@ -1,4 +1,4 @@
-// 500?
+// AC
 public class Sqrt_x {
 
     public static void main(String args[]){
@@ -39,7 +39,7 @@ public class Sqrt_x {
         while(m-->0) {
             ret <<= 1;
         }
-        System.out.println(ret);
+        //System.out.println(ret);
         return ret;
     }
 
