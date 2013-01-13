@@ -14,16 +14,15 @@ public class UniqueBSTII {
             l.add(new TreeNode());
             return l;
         }
-        if (n==1) {
-            TreeNode t = new TreeNode(1);
-            l.add(t);
-            return l;
-        }
-        for (int i=1; i<=n; i++) {
+        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+        dfs(list, 1, n);
+    }
+
+    public void dfs(ArrayList<TreeNode> list, int left, int right) {
+        for (int i=left; i<=right; ++i) {
+            TreeNode root = new TreeNode(i);
 
         }
-
-
     }
 
 }
