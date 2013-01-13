@@ -1,3 +1,4 @@
+// AC
 /**
  * Definition for binary tree with next pointer.
  * public class TreeLinkNode {
@@ -24,24 +25,28 @@ public class PopulatingNextRightPointers {
         q.offer(root);
         int i = 0;
         TreeLinkNode last = null;
-        boolean end = false;
+        boolean end = true;
         while(q.size() != 0) {
             TreeLinkNode tail = q.poll();
             if (tail != null) {
                 i++;
             }
-            System.out.println(i);
-            if (uponEnd(i)) {
-
-            }
-            if (last != null) {
+            //System.out.println(i);
+            if (!end) {
                 last.next = tail;
             }
+            if (uponEnd(i)) {
+                end = true;
+                tail.next = null;
+            } else {
+                end = false;
+            }
+
             last = tail;
 
             if (tail != null) {
-               if (tail.left != null) {
-                   q.offer(tail.left);
+                if (tail.left != null) {
+                    q.offer(tail.left);
                 }
                 if (tail.right != null) {
                     q.offer(tail.right);
