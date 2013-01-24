@@ -12,10 +12,14 @@ public class PascalsTriangleII {
         // DO NOT write main() function
         ArrayList<Integer> list = new ArrayList<Integer>();
         list.add(1);
-
         if (rowIndex == 1) {
             return list;
         }
+        while (rowIndex >= 2) {
+            list.add(1);
+            return list;
+        }
+
 
     }
 

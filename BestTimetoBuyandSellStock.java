@@ -5,7 +5,7 @@ public class BestTimetoBuyandSellStock {
         if (prices.length == 0) {
             return 0;
         }
-        int minus = Integer.MIN_VALUE;
+        int minus = 0;
         int min = Integer.MAX_VALUE;
         int profit = 0;
         for (int i=0; i<prices.length; ++i) {
