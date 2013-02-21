@@ -1,10 +1,11 @@
 import java.util.ArrayList;
-public class NQueens {
-    public ArrayList<String[]> solveNQueens(int n) {
+public class NQueensII {
+    int num;
+    public int totalNQueens(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
 
-        ArrayList<String[]> ret = new ArrayList<String[]>();
+        num = 0;
 
         StringBuilder[] chess = new StringBuilder[n];
 
@@ -15,14 +16,7 @@ public class NQueens {
             }
         }
 
-        // for (StringBuilder sb : chess) {
-        //    //sb = new StringBuilder();
-        //    for (int j=0; j<n; ++j) {
-        //        sb.append('.');
-        //    }
-        // }
-
-        dfs(chess, 0, ret);
+        dfs(chess, 0);
 
         // for (String[] chess_:ret ) {
         //     for (String s : chess_) {
@@ -30,10 +24,10 @@ public class NQueens {
         //     }
         //     System.out.println();
         // }
-        return ret;
+        return num;
     }
 
-    void dfs(StringBuilder[] chess, int row, ArrayList<String[]> set) {
+    void dfs(StringBuilder[] chess, int row) {
         int n = chess.length;
         if (row >= n) {
             return;
@@ -42,13 +36,9 @@ public class NQueens {
             chess[row].setCharAt(j, 'Q');
             if (validate(chess, row, j)) {
                 if (row == n-1) {
-                    String[] s = new String[n];
-                    for ( int k = 0; k < n; ++k ) {
-                        s[k] = chess[k].toString();
-                    }
-                    set.add(s);
+                    num++;
                 } else {
-                    dfs(chess, row + 1, set);
+                    dfs(chess, row + 1);
                 }
             }
             chess[row].setCharAt(j, '.');
@@ -59,10 +49,8 @@ public class NQueens {
 
     boolean validate(StringBuilder[] chess, int row, int col) {
         int n = chess.length;
-        //System.out.println(n);
         for (int i=0; i<n; ++i) {
             if (i!=row && chess[i].charAt(col)=='Q') {
-                //System.out.println('0');
                 return false;
             }
         }
@@ -70,7 +58,6 @@ public class NQueens {
         int i = row, j = col;
         while(i>=0 && j>=0) {
             if (i!=row && chess[i].charAt(j) == 'Q') {
-                //System.out.println('1');
                 return false;
             }
             i--; j--;
@@ -105,15 +92,7 @@ public class NQueens {
     }
 
     public static void main(String[] args) {
-        NQueens qs = new NQueens();
-        qs.solveNQueens(4);
-
-        // String[] chess = {
-        //     ".Q..",  // Solution 1
-        //     "...Q",
-        //     "Q...",
-        //     "..Q."
-        // };
-        // System.out.println(qs.validate(chess, 3, 2));
+        NQueensII qs = new NQueensII();
+        System.out.println(qs.totalNQueens(4));
     }
 }
