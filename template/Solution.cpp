@@ -1,4 +1,3 @@
-
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -10,8 +9,26 @@
 
 using namespace std;
 
-int main()
+class Solution {
+public:
+    Solution() {
+        cout << "constructor" << endl;
+    }
+    void func() {
+        cout << "hello world!" << endl;
+    }
+    ~Solution() {
+        cout << "destructor" << endl;
+    }
+};
+
+
+int main(int argc, char *argv[])
 {
-    cout << "hello world!" << endl;
+    //Solution* s = new Solution();
+    //s->func();
+    Solution s;
+    s.func();
     system("PAUSE");
+    return 0;
 }
