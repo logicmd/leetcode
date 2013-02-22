@@ -35,12 +35,10 @@ public class NQueens {
 
     void dfs(StringBuilder[] chess, int row, ArrayList<String[]> set) {
         int n = chess.length;
-        if (row >= n) {
-            return;
-        }
         for (int j=0; j<n; ++j) {
-            chess[row].setCharAt(j, 'Q');
+
             if (validate(chess, row, j)) {
+                chess[row].setCharAt(j, 'Q');
                 if (row == n-1) {
                     String[] s = new String[n];
                     for ( int k = 0; k < n; ++k ) {
@@ -50,8 +48,9 @@ public class NQueens {
                 } else {
                     dfs(chess, row + 1, set);
                 }
+                chess[row].setCharAt(j, '.');
             }
-            chess[row].setCharAt(j, '.');
+
         }
 
         return;
@@ -106,7 +105,7 @@ public class NQueens {
 
     public static void main(String[] args) {
         NQueens qs = new NQueens();
-        qs.solveNQueens(4);
+        System.out.println(qs.solveNQueens(20).size());
 
         // String[] chess = {
         //     ".Q..",  // Solution 1
