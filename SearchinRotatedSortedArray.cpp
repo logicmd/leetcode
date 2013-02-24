@@ -4,10 +4,14 @@ public:
     int search(int A[], int n, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        dfs(A, 0, n-1, target);
+        return dfs(A, 0, n-1, target);
     }
 
     int dfs(int A[], int s, int e, int target) {
+        int m = (s + e) / 2;
+        if (A[m] > A[s])
+        {
 
+        }
     }
 };
