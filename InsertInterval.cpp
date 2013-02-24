@@ -24,9 +24,10 @@ public:
         return (i.start < j.start);
     }
 
-    vector<Interval> merge(vector<Interval> &intervals) {
+    vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        intervals.push_back(newInterval);
         if (intervals.size() <= 1)
         {
             return intervals;
@@ -34,7 +35,7 @@ public:
         sort(intervals.begin(), intervals.end(), interval_Comparator);
         for (vector<Interval>::iterator i = intervals.begin(); i != intervals.end() - 1; )
         {
-            if ((i+1)->start > (i)->end) // point *(i) or (i)->member
+            if ((i+1)->start > (i)->end)
             {
                 ++i;
                 continue;
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     //s->func();
     Solution s;
     vector<Interval> i;
-    s.merge(i);
+    s.insert(i);
     system("PAUSE");
     return 0;
 }
