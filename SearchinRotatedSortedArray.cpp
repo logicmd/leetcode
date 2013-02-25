@@ -16,97 +16,75 @@ public:
     int search(int A[], int n, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        return dfs(A, 0, n-1, target);
-    }
+        int s = 0;
+        int e = n - 1;
 
-    int dfs(int A[], int s, int e, int target) {
-        if (s == e)
-        {
-            if (A[s] == target)
+        while(s <= e) {
+            int m = (s + e) / 2;
+            int midVal = A[m];
+            int startVal = A[s];
+
+            if (target > midVal)
             {
-                return s;
-            }
-            return -1;
-        }
-        if (s > e)
-        {
-            return -1;
-        }
-        int m = (s + e) / 2;
-        if (target > A[m])
-        {
-            if (A[m] > A[s])
-            {
-                dfs(A, m, e, target);
-            }
-            else if (A[m] < A[s])
-            {
-                if (target > A[s])
+                if (midVal > startVal)
                 {
-                    dfs(A, s, m, target);
+                    s = m + 1;
                 }
-                else if (target < A[s])
+                else if (midVal < startVal)
                 {
-                    dfs(A, m, e, target);
+                    if (target > A[s])
+                    {
+                        e = m - 1;
+                    }
+                    else if (target < A[s])
+                    {
+                        s = m + 1;
+                    }
+                    else
+                    {
+                        return s;
+                    }
                 }
                 else
                 {
-                    return s;
+                    s = m + 1;
+                }
+            }
+            else if (target < midVal)
+            {
+                if (midVal > startVal)
+                {
+                    if (target > startVal)
+                    {
+                        e = m - 1;
+                    }
+                    else if (target < startVal)
+                    {
+                        s = m + 1;
+                    }
+                    else
+                    {
+                        return s;
+                    }
+                }
+                else if (midVal < startVal)
+                {
+                    s = m + 1;
+                }
+                else
+                {
+                    s = m + 1;
                 }
             }
             else
             {
-                if (target == A[s])
-                {
-                    return s;
-                }
-                if (target == A[e])
-                {
-                    return e;
-                }
-                return -1;
+                return m;
             }
-        }
-        else if (target < A[m])
-        {
-            if (A[m] > A[s])
-            {
-                if (target > A[s])
-                {
-                    dfs(A, s, m, target);
-                }
-                else if (target < A[s])
-                {
-                    dfs(A, m, e, target);
-                }
-                else
-                {
-                    return s;
-                }
-            }
-            else if (A[m] < A[s])
-            {
-                dfs(A, m, e, target);
-            }
-            else
-            {
-                if (target == A[s])
-                {
-                    return s;
-                }
-                if (target == A[e])
-                {
-                    return e;
-                }
-                return -1;
-            }
-        }
-        else
-        {
-            return m;
-        }
 
+        }
+        return -1;
     }
+
 };
 
 
