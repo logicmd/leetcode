@@ -13,7 +13,16 @@ using namespace std;
 
 class Solution {
 public:
-    int search(int A[], int n, int target) {
+    bool search(int A[], int n, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(searchIndex(A, n, target) == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    int searchIndex(int A[], int n, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         int s = 0;
@@ -23,8 +32,9 @@ public:
             int m = (s + e) / 2;
             int midVal = A[m];
             int startVal = A[s];
+            int endVal = A[e];
 
-            //printf("A[%d]=%d,A[%d]=%d,A[%d]=%d\n", s,startVal,m,midVal,e,A[e]);
+            printf("A[%d]=%d,A[%d]=%d,A[%d]=%d\n", s,startVal,m,midVal,e,A[e]);
 
             if (target > midVal)
             {
@@ -49,7 +59,27 @@ public:
                 }
                 else
                 {
-                    s = m + 1;
+                    if (s==m)
+                    {
+                        if (startVal == target)
+                        {
+                            return s;
+                        }
+                        if (endVal == target)
+                        {
+                            return e;
+                        }
+                        return -1;
+                    }
+                    if (midVal == endVal)
+                    {
+                        s++;
+                        e--;
+                    }
+                    else
+                    {
+                        s = m + 1;
+                    }
                 }
             }
             else if (target < midVal)
@@ -75,7 +105,27 @@ public:
                 }
                 else
                 {
-                    s = m + 1;
+                    if (s==m)
+                    {
+                        if (startVal == target)
+                        {
+                            return s;
+                        }
+                        if (endVal == target)
+                        {
+                            return e;
+                        }
+                        return -1;
+                    }
+                    if (midVal == endVal)
+                    {
+                        s++; // Trick
+                        e--;
+                    }
+                    else
+                    {
+                        s = m + 1; // 不管比他大还是比他小，都在剩下部分找
+                    }
                 }
             }
             else
@@ -94,8 +144,8 @@ int main(int argc, char *argv[])
 {
 
     Solution s;
-    int a[] = {258,260,265,266,268,269,271,275,276,278,280,282,287,288,289,293,2,4,5,9,16,23,24,25,26,27,28,36,37,46,47,52,55,56,60,63,67,71,74,75,76,79,80,81,82,92,97,99,103,104,106,109,111,112,117,121,125,131,133,136,141,142,143,144,154,160,161,168,169,179,187,190,201,202,204,206,208,209,211,213,218,220,222,224,225,226,229,230,231,234,240,241,242,243,244,245,247,249,252,253,254,257};
-    cout << s.search(a, 102, 81);
+    int a[] = {1,1,3,1};
+    cout << s.search(a, 4, 3);
     system("PAUSE");
     return 0;
 }
