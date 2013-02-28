@@ -1,3 +1,4 @@
+// MLE
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -13,41 +14,56 @@ typedef pair<int, int> point;
 typedef pair<set<point>, bool> pile;
 
 class Solution {
-private:
-    vector<pile> vpile;
+//private:
+    //vector<pile> vpile;
 public:
     void solve(vector<vector<char> > &board) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         int m = board.size();
+        if (m == 0)
+        {
+            return ;
+        }
         int n = board[0].size();
+        if (n == 0)
+        {
+            return ;
+        }
 
+        //cout << m << " " << n << endl;
 
         for (int i = 0; i < m; ++i)
         {
-            for (int j = 0; i < n; ++j)
+            for (int j = 0; j < n; ++j)
             {
+
                 if (board[i][j] == 'O')
                 {
+                    //cout << "hello" << endl;
                     pile p = add(board, i, j);
-                    if (!p.first.empty())
+                    if (!p.first.empty() && !(p.second))
                     {
-                        vpile.push_back(p);
+                        // vpile.push_back(p);
+                        for (set<point>::iterator it = p.first.begin(); it != p.first.end(); ++it)
+                        {
+                            board[(*it).first][(*it).second] = 'X';
+                        }
                     }
                 }
             }
         }
 
-        for (vector<pile>::iterator i = vpile.begin(); i != vpile.end(); ++i)
-        {
-            if (!(*i).second)
-            {
-                for (set<point>::iterator p = (*i).first.begin(); p != (*i).first.end(); ++p)
-                {
-                    board[(*p).first][(*p).second] = 'X';
-                }
-            }
-        }
+        // for (vector<pile>::iterator i = vpile.begin(); i != vpile.end(); ++i)
+        // {
+        //     if ((*i).first.size() != 0 && !(*i).second)
+        //     {
+        //         for (set<point>::iterator p = (*i).first.begin(); p != (*i).first.end(); ++p)
+        //         {
+        //             board[(*p).first][(*p).second] = 'X';
+        //         }
+        //     }
+        // }
     }
 
     pile add(vector<vector<char> > &board, int i, int j) {
@@ -57,14 +73,14 @@ public:
         set<point> pset;
 
         point pseed = make_pair(i, j);
-        for (vector<pile>::iterator i = vpile.begin(); i != vpile.end(); ++i)
-        {
-            set<point> pset = (*i).first;
-            if (pset.find(pseed) != pset.end())
-            {
-                return make_pair(pset, false);
-            }
-        }
+        // for (vector<pile>::iterator it = vpile.begin(); it != vpile.end(); ++it)
+        // {
+        //     set<point> pset = (*it).first;
+        //     if (pset.find(pseed) != pset.end())
+        //     {
+        //         return make_pair(pset, false);
+        //     }
+        // }
 
 
         stack<point> pool;
@@ -116,7 +132,8 @@ int main(int argc, char *argv[])
     //Solution* s = new Solution();
     //s->func();
     Solution s;
-    vector<char> v ('X');
+    vector<char> v;
+    v.push_back('X');
     vector<vector<char> > vv;
     vv.push_back(v);
     s.solve(vv);
