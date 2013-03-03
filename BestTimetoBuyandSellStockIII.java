@@ -1,5 +1,5 @@
 // 一定要先想出正确的方法，暴力也无所谓，再优化
-// TLE
+// AC
 public class BestTimetoBuyandSellStockIII {
     public int maxProfit(int[] prices) {
         // Start typing your Java solution below
@@ -9,64 +9,39 @@ public class BestTimetoBuyandSellStockIII {
         }
 
         int n = prices.length;
+        int profit[] = new int[n];
+        int profitCandidate = 0;
+        int min = Integer.MAX_VALUE;
 
-        int[] savedMin = {Integer.MAX_VALUE, Integer.MAX_VALUE};
-        int[] savedSaleTime = {-1, -1};
-        int[] savedProfit = new int[2];
-        int total = 0;
-        int savedBuyTime = 0;
-
-        for (int mid=0; mid<n; mid++) {
-            int profitCandidate = 0;
-            int saleTime = savedSaleTime[0];
-            int min = savedMin[0];
-            int profit = -1;
-
-            for (int i=saleTime+1; i<=mid; i++) {
-                if (min > prices[i]) {
-                    min = prices[i];
-                }
-                profitCandidate = prices[i] - min;
-                if (profitCandidate > profit) {
-                    profit = profitCandidate;
-                    saleTime = i;
-                }
+        for (int i = 0; i < n; ++i) {
+            if (prices[i] < min) {
+                min = prices[i];
             }
-
-            savedSaleTime[0] = saleTime;
-            savedMin[0] = min;
-            savedProfit[0] = profit;
-
-            int buyTime = savedBuyTime >= mid ? savedBuyTime : mid;
-            profitCandidate = 0;
-            saleTime = mid - 1;
-            min = Integer.MAX_VALUE;
-            profit = -1;
-
-            for (int i=buyTime; i<n; i++) {
-                if (min > prices[i]) {
-                    min = prices[i];
-                    buyTime = i;
-                }
-                profitCandidate = prices[i] - min;
-                if (profitCandidate > profit) {
-                    profit = profitCandidate;
-                    saleTime = i;
-                    savedBuyTime = buyTime;
-                }
+            profitCandidate = prices[i] - min;
+            if (i>0) {
+                profit[i] = profit[i-1];
             }
-
-            savedSaleTime[1] = saleTime;
-            savedMin[1] = min;
-            savedProfit[1] = profit;
-
-            if(total < savedProfit[0] + savedProfit[1]) {
-                total = savedProfit[0] + savedProfit[1];
+            if (profit[i] < profitCandidate) {
+                profit[i] = profitCandidate;
             }
-
         }
-        //System.out.println(savedMin[0] + " " + savedSaleTime[0] +
-        //    " " + savedMin[1] + " " + savedSaleTime[1]);
+
+        int max = Integer.MIN_VALUE;
+        int total = 0;
+        int profit_2nd = 0;
+        for (int i = n-1; i >= 0; --i) {
+            if (prices[i] > max) {
+                max = prices[i];
+            }
+            profitCandidate = max - prices[i];
+            if (profit_2nd < profitCandidate) {
+                profit_2nd = profitCandidate;
+            }
+            if (total < profit_2nd + profit[i]) {
+                total = profit_2nd + profit[i];
+            }
+        }
+
         return total;
     }
 
