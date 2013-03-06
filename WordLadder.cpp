@@ -1,6 +1,3 @@
-// Minor errors and MLE
-// WTF
-// Fuck the c++0x unordered_set
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -19,11 +16,6 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         int n = start.size();
-        if (isConnect(start, end, n))
-        {
-            return 1;
-        }
-
 
         int times = 0;
 
@@ -32,6 +24,7 @@ public:
         while (!st.empty())
         {
             vector<string> s;
+            s.clear();
 
             int cout = 0;
             while (!st.empty())
@@ -45,19 +38,25 @@ public:
                 times++;
             }
 
-            if (dict.size() != 0) {
+            if (!dict.empty())
+            {
                 for (vector<string>::iterator i = s.begin(); i != s.end(); ++i)
                 {
-                    for (unordered_set<string>::iterator j = dict.begin(); j != dict.end(); ++j)
+                    for (unordered_set<string>::iterator j = dict.begin(); j != dict.end();)
                     {
                         if (isConnect(*i, *j, n))
                         {
-                            dict.erase(j);
-                            st.push(*j);
+
                             if (isConnect(*j, end, n))
                             {
                                 return ++times;
                             }
+                            st.push(*j);
+                            dict.erase(j++);
+                        }
+                        else
+                        {
+                            ++j;
                         }
                     }
                 }
@@ -68,7 +67,7 @@ public:
                 {
                     if (isConnect(*i, end, n))
                     {
-                            return times;
+                        return times;
                     }
                 }
                 return 0;
@@ -83,11 +82,29 @@ public:
         int c = 0;
         for (int i = 0; i < n; ++i)
         {
-            if (s[i] == e[i])
+            if (s[i] != e[i])
             {
                 c++;
+                if (c > 1)
+                {
+                    return false;
+                }
             }
         }
-        return c==1;
+        return c==1 || c==0;
     }
 };
+
+int main()
+{
+    //Solution* s = new Solution();
+    //s->func();
+    Solution s;
+    unordered_set<string> dict;
+    dict.insert("hot");
+    dict.insert("dot");
+    dict.insert("dog");
+    s.ladderLength("hot", "dot", dict);
+    system("PAUSE");
+    return 0;
+}

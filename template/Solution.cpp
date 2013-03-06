@@ -23,7 +23,7 @@ public:
 };
 
 
-int main(int argc, char *argv[])
+int main()
 {
     //Solution* s = new Solution();
     //s->func();
