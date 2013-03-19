@@ -28,6 +28,14 @@ public:
             int start_len;
             int end_len;
 
+            bool extend_start = (starts.find(*i+1)==starts.end());
+            bool extend_end = (starts.find(*i1)==starts.end());
+
+            if (extend_start)
+            {
+                sd
+            }
+
         }
         return ret;
     }
