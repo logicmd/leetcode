@@ -1,4 +1,4 @@
-// WA
+// AC
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -40,13 +40,20 @@ public:
                 start_len = start_find->second;
                 end_len = end_find->second;
 
-                ends.erase(*i-1);
-                starts.erase(*i+1);
+                //ends.erase(*i+1);
+                //ends.erase(*i-1);
+                //starts.erase(*i-1);
+                //starts.erase(*i+1);
 
                 int start = *i - end_len;
-                int new_len = start_len + end_len - 1;
-                starts[start] = new_len;
-                ends[start + new_len - 1] = new_len;
+                int new_len = start_len + end_len + 1;
+                // caused by duplicated entry
+                if (new_len > starts[start] && new_len > ends[start + new_len - 1])
+                {
+                    starts[start] = new_len;
+                    ends[start + new_len - 1] = new_len;
+                }
+
             }
             else if (extends_start)
             {
@@ -55,24 +62,38 @@ public:
                 starts.erase(*i + 1);
 
                 int new_len = start_len + 1;
-                starts[*i] = new_len;
-                ends[*i + new_len - 1] = new_len;
+                // caused by duplicated entry
+                if (new_len > starts[*i] && new_len > ends[*i - new_len + 1])
+                {
+                    starts[*i] = new_len;
+                    ends[*i + new_len - 1] = new_len;
+                }
+
 
             }
             else if (extends_end)
             {
+
                 end_len = end_find->second;
 
                 ends.erase(*i - 1);
 
                 int new_len = end_len + 1;
-                ends[*i] = new_len;
-                starts[*i - new_len + 1] = new_len;
+                // caused by duplicated entry
+                if (new_len > ends[*i] && new_len > starts[*i - new_len + 1])
+                {
+                    ends[*i] = new_len;
+                    starts[*i - new_len + 1] = new_len;
+                }
+
             }
             else
             {
-                starts.insert(make_pair(*i, 1));
-                ends.insert(make_pair(*i, 1));
+                // caused by duplicated entry
+                if(starts.find(*i)==starts.end() && ends.find(*i)==ends.end()) {
+                    starts.emplace(*i, 1);
+                    ends.emplace(*i, 1);
+                }
             }
 
         }
@@ -93,7 +114,8 @@ public:
 int main()
 {
     Solution s;
-    int m[] = {-1, 1, 0};
+    int m[] = {-9,-4,9,-7,0,7,3,-1,6,2,-2,8,-2,0,2,-7,-5,-2,6,-5,0,-8,8,1,0,6,8,-8,-1};
+    //int m[] = {100, 4, 200, 1, 3, 2};
     vector<int> v (m, m+sizeof(m)/sizeof(int));
     s.longestConsecutive(v);
     system("PAUSE");
