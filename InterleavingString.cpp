@@ -1,3 +1,4 @@
+// TLE on large set
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -22,9 +23,12 @@ public:
         return dfs(0,0,0);
     }
 
-    bool dfs(int i, int j, int k) {
-        if ((i == str1.size() - 1) && (j == str2.size() - 1) && (k == str.size() - 1))
+    bool dfs(unsigned int i, unsigned int j, unsigned int k) {
+        //cout << i << " " << j << " " << k << endl;
+        //cout << "fuck  " << str1.size() << " " << str2.size() << " " << str.size() << endl;
+        if ((i == str1.size()) && (j == str2.size()) && (k == str.size()))
         {
+            //cout << "fuck 2  " << str1.size() << " " << str2.size() << " " << str.size() << endl;
             return true;
         }
 
@@ -32,14 +36,20 @@ public:
         {
             k++;
             i++;
-            dfs(i, j, k);
+            if (dfs(i, j, k)) {
+                return true;
+            }
             i--;
             k--;
+
+
         }
         if (str[k] == str2[j]) {
             k++;
             j++;
-            dfs(i, j, k);
+            if (dfs(i, j, k)) {
+                return true;
+            }
             j--;
             k--;
         }
@@ -49,12 +59,19 @@ public:
 };
 
 
-int main(int argc, char *argv[])
+int main()
 {
-    //Solution* s = new Solution();
-    //s->func();
     Solution s;
-    cout << s.isInterleave("a","b","ab");
+    string f;
+    if (s.isInterleave("bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa","babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab","babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab"))
+    {
+        f = "yes";
+    }
+    else
+    {
+        f = "no";
+    }
+    cout << f << endl;
     system("PAUSE");
     return 0;
 }
