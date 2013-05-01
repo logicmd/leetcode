@@ -11,6 +11,11 @@
 
 using namespace std;
 
+// AC
+// Java更新map，hashmap.put(key, new_value)，新的value就会被overwritten了
+// C++不一样，hash_map.emplace(key, new_value)不会有用，得hash_map[key]=new_value
+
+
 class Solution {
 public:
     vector<string> anagrams(vector<string> &strs) {
@@ -21,7 +26,7 @@ public:
         unordered_map<string, string> word_map;
         for (vector<string>::iterator i = strs.begin(); i != strs.end(); ++i)
         {
-            set<char> s;
+            multiset<char> s;
             string str;
             if ((*i).size() > 0)
             {
@@ -29,11 +34,11 @@ public:
                 {
                     s.insert((*i)[j]);
                 }
-                for (set<char>::iterator j = s.begin(); j != s.end(); ++j)
+                for (multiset<char>::iterator j = s.begin(); j != s.end(); ++j)
                 {
                     str.push_back(*j);
                 }
-                cout << str << endl;
+                //cout << str << endl;
             }
             word_map.emplace(*i, str);
             unordered_map<string, int>::iterator got = hash_map.find(str);
@@ -43,26 +48,21 @@ public:
             }
             else
             {
-                cout << str << ": " << got->second << " UP" << endl;
-                int c = got->second + 1;
-                cout << got->second << " +++++++++++ " << c << endl;
-                hash_map.emplace(str, c);
-                cout << str << ": " << hash_map.find(str)->second << " NOW" << endl;
-
+                hash_map[str] = got->second + 1;
             }
         }
-        cout << word_map.size() << endl;
-        cout << hash_map.size() << endl;
+        //cout << word_map.size() << endl;
+        // cout << hash_map.size() << endl;
 
-        for (unordered_map<string, int>::iterator i = hash_map.begin(); i != hash_map.end(); ++i)
-        {
-            cout << i->first << ": " << i->second << endl;
-        }
+        // for (unordered_map<string, int>::iterator i = hash_map.begin(); i != hash_map.end(); ++i)
+        // {
+        //     cout << i->first << ": " << i->second << endl;
+        // }
 
         vector<string> ret;
         for (vector<string>::iterator i = strs.begin(); i != strs.end(); ++i)
         {
-            set<char> s;
+            multiset<char> s;
             string str = word_map.find(*i)->second;
             if (hash_map.find(str)->second > 1)
             {
@@ -79,10 +79,9 @@ public:
 int main()
 {
     Solution s;
-    vector<string> vin;
-    vin.push_back("ant");
-    vin.push_back("nat");
-    vin.push_back("tan");
+
+    string strin[49] = {"hos","boo","nay","deb","wow","bop","bob","brr","hey","rye","eve","elf","pup","bum","iva","lyx","yap","ugh","hem","rod","aha","nam","gap","yea","doc","pen","job","dis","max","oho","jed","lye","ram","pup","qua","ugh","mir","nap","deb","hog","let","gym","bye","lon","aft","eel","sol","jab"};
+    vector<string> vin(strin, strin + 49);
     vector<string> vout = s.anagrams(vin);
     for (vector<string>::iterator i = vout.begin(); i != vout.end(); ++i)
     {
