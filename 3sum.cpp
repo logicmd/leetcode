@@ -38,7 +38,11 @@ public:
             zero++;
         }
 
+        cout << zero << endl;
+
+
         while(1) {
+            cout << i << " " << j << endl;
             if (i >= j)
             {
                 break;
@@ -92,7 +96,7 @@ public:
             }
             if (num[i] + num[j] < 0)
             {
-                for (int z = zero + 1; z < j; ++z)
+                for (int z = zero; z < j; ++z)
                 {
                     if (num[i] + num[j] + num[z] == 0)
                     {
@@ -105,6 +109,14 @@ public:
                         break;
                     }
                 }
+                // if (j-1 >= zero)
+                // {
+                //     j--;
+                // }
+                // else
+                // {
+                //     i++;
+                // }
                 i++;
                 continue;
             }
@@ -122,6 +134,18 @@ public:
 int main()
 {
     Solution s;
+    int arr[] = {-2,0,1,1,2};
+    vector<int> v(arr, arr + sizeof(arr)/sizeof(int));
+    vector<vector<int> > out = s.threeSum(v);
+    for (vector<vector<int> >::iterator i = out.begin(); i != out.end(); ++i)
+    {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        {
+            cout << *j << " ";
+        }
+        cout << endl;
+
+    }
 
     system("PAUSE");
     return 0;
