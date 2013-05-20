@@ -16,41 +16,27 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-struct Node {
-    TreeNode *node;
-    int level;
-    Node(TreeNode *n, int l) {
-        n = node;
-        l = level;
-    }
-};
-
 class Solution {
 public:
-    bool isBalanced(TreeNode *root) {
+    int minDepth(TreeNode *root) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         if (root == NULL)
         {
-            return true;
+            return 0;
         }
         set<int> depth;
         int level = 1;
         dfs(root, depth, level);
 
-        if (depth.size() < 2)
-        {
-            return true;
-        }
-
-        int max = *(depth.end()--);
-        int min = *(depth.begin());
-
-        return (max-min<2);
+        return *(depth.begin()++);
 
     }
-    void postorder(TreeNode *root, set<int> & depth, int& level) {
-
+    void dfs(TreeNode *root, set<int> & depth, int& level) {
+        if (root->left == NULL && root->right == NULL)
+        {
+            depth.insert(level);
+        }
 
         if(root->left != NULL)
         {
@@ -64,11 +50,6 @@ public:
             level++;
             dfs(root->right, depth, level);
             level--;
-        }
-
-        if (root->left == NULL && root->right == NULL)
-        {
-            depth.insert(level);
         }
     }
 };
