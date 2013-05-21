@@ -34,41 +34,32 @@ public:
         {
             return true;
         }
-        set<int> depth;
-        int level = 1;
-        dfs(root, depth, level);
 
-        if (depth.size() < 2)
-        {
-            return true;
-        }
-
-        int max = *(depth.end()--);
-        int min = *(depth.begin());
 
         return (max-min<2);
 
     }
-    void postorder(TreeNode *root, set<int> & depth, int& level) {
+    void postorder(TreeNode *root, int& depth)
+    {
 
 
         if(root->left != NULL)
         {
-            level++;
-            dfs(root->left, depth, level);
-            level--;
+            depth--;
+            dfs(root->left, depth);
+            depth++;
         }
 
         if(root->right != NULL)
         {
-            level++;
-            dfs(root->right, depth, level);
-            level--;
+            depth--;
+            dfs(root->right, depth);
+            depth++;
         }
 
         if (root->left == NULL && root->right == NULL)
         {
-            depth.insert(level);
+            depth = 0;
         }
     }
 };
