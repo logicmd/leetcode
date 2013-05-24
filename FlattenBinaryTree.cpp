@@ -1,3 +1,4 @@
+// ac
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -17,17 +18,17 @@ struct TreeNode {
 
 class Solution {
 public:
-    void preorder(TreeNode *root) {
-        cout << root.val;
-        if (root->left)
-        {
-            preorder(root->left);
-        }
-        if (root->right)
-        {
-            preorder(root->right);
-        }
+    void preorder(TreeNode *root, queue<TreeNode *> &q) {
+        q.push(root);
 
+        if (root->left != NULL)
+        {
+            preorder(root->left, q);
+        }
+        if (root->right != NULL)
+        {
+            preorder(root->right, q);
+        }
     }
     void flatten(TreeNode *root) {
         // Start typing your C/C++ solution below
@@ -36,9 +37,20 @@ public:
         {
             return;
         }
-        if (root->left)
-        {
-            /* code */
+        queue<TreeNode *> q;
+        preorder(root, q);
+
+        TreeNode *last = root;
+        q.pop();
+
+        while(!q.empty()) {
+            TreeNode *cur = q.front();
+            q.pop();
+
+            last->right = cur;
+            last->left = NULL;
+
+            last = cur;
         }
     }
 };
