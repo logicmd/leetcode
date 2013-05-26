@@ -1,9 +1,21 @@
+// tle
+#include <cassert>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cstdio>
+#include <string>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
 class Solution {
 public:
-    bool isPrindrome(string s, int i, int j, map<pair<int i, int j>, bool> &m;) {
-        map<pair<int i, int j>, bool>::iterator got = m.find(make_pair(i, j));
+    bool isPrindrome(string s, int i, int j, map<string, bool> &m) {
+        map<string, bool>::iterator got = m.find(s.substr(i, j-i+1));
         if(got != m.end()) {
-            return *(got);
+            return got->second;
         }
 
 
@@ -14,23 +26,23 @@ public:
             if(s[i] == s[j]) {
                 i++;
                 j--;
-                map<pair<int i, int j>, bool>::iterator _got = m.find(make_pair(i, j));
+                map<string, bool>::iterator _got = m.find(s.substr(i, j-i+1));
                 if(_got != m.end()) {
-                    return *(_got);
+                    return _got->second;
                 }
             } else {
                 flag = false;
                 break;
             }
         }
-        m.insert(make_pair(make_pair(i, j)))
+        m.insert(make_pair(s.substr(i_copy, j_copy-i_copy+1), flag));
         return flag;
     }
 
     void dfs(string s, int i, vector<string> &cur, set<int> &st) {
         int n = s.size();
 
-        map<pair<int i, int j>, bool> m;
+        map<string, bool> m;
 
         if (i >= n)
         {
