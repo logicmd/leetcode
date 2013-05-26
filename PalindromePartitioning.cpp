@@ -1,3 +1,4 @@
+//ac
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -13,9 +14,10 @@ class Solution {
 public:
     bool isPrindrome(string s, int i, int j) {
         bool flag = true;
-        while (i > j) {
+        while (i <= j) {
             if(s[i] == s[j]) {
-                continue;
+                i++;
+                j--;
             } else {
                 flag = false;
                 break;
@@ -32,13 +34,10 @@ public:
             return;
         }
 
-        for(int j = i+1; j<n; ++j) {
+        for(int j = i; j<n; ++j) {
             if(isPrindrome(s, i, j)) {
-                cur.push_back(s.substr(i, j));
-                if (j >= n) {
-                    break;
-                } else if (j == n-1)
-                {
+                cur.push_back(s.substr(i, j-i+1));
+                if (j == n-1) {
                     set.push_back(cur);
                 }
 
@@ -54,6 +53,10 @@ public:
         // DO NOT write int main() function
         vector<vector<string>> set;
         vector<string> cur;
+
+
+        //map<pair<int i, int j>, bool> m;
+        //vector<vector<bool>> v;
 
         dfs(s, 0, cur, set);
         return set;
