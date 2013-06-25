@@ -1,3 +1,17 @@
+#include <cassert>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cstdio>
+#include <queue>
+#include <utility>
+#include <algorithm>
+#include <set>
+#include <cstring>
+
+
+using namespace std;
+
 class Solution {
 public:
     vector<int> grayCode(int n) {
@@ -5,37 +19,56 @@ public:
         // DO NOT write int main() function
         vector<int> ret;
         vector<int>().swap(ret);
-        if(n == 0) {
-            return NULL;
-        }
-        if(n == 1) {
-            ret.push_back(0);
-            ret.push_back(1);
+        ret.push_back(0);
+        if(n==0) {
             return ret;
         }
-        int *f = new int[n];
-        f[0] = 1;
-        for(int i=1; i<n)
+
+        vector<int> mask;
+        vector<int>().swap(mask);
+        for(int i=1; i<=(1<<n)-1; ++i) {
+            int j=1;
+            int ind = i;
+            while(ind%2==0) {
+                ind/=2;
+                j<<=1;
+            }
+            mask.push_back(j);
+        }
+
+        // vector<int> mask = getMask(n);
+
+        int code = 0;
+
+        for(vector<int>::iterator it=mask.begin(); it!=mask.end(); ++it) {
+            //cout << "mask: " << *it << "\t";
+            code^=(*it);
+            cout << code << endl;
+            ret.push_back(code);
+        }
+        return ret;
     }
+
+    // vector<int> getMask(int n) {
+    //     vector<int> ret;
+    //     vector<int>().swap(ret);
+    //     for(int i=1; i<=(1<<n)-1; ++i) {
+    //         int j=1;
+    //         int ind = i;
+    //         while(ind%2==0) {
+    //             ind/=2;
+    //             j<<=1;
+    //         }
+    //         ret.push_back(j);
+    //     }
+    //     return ret;
+    // }
+
+
 };
 
-00
-01    1
-11    2
-10    1
-
-
-000
-001   1
-011   2
-010   1
-110   3
-111
-101
-100
-
-
-
-100   2
-101   1
-111   2
+int main() {
+    Solution s;
+    s.grayCode(1);
+    system("PAUSE");
+}
