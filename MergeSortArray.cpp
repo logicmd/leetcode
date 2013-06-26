@@ -7,15 +7,15 @@ public:
         int i = m-1;
         int j = n-1;
         int k = i+j;
-        while(i>=0 && j>=0 && k>=0) {
-            while(A[i]>B[j]) {
+        while(i>=-1 && j>=-1 && k>=0) {
+            while(i>=0 && ((j>=0 && A[i]>B[j]) || j==-1) ) {
 
                 A[k] = A[i];
                 i--;
                 k--;
             }
 
-            while(A[i]<=B[j]) {
+            while(j>=0 && ((i>=0 && A[i]<=B[j]) || i==-1 ) {
 
                 A[k] = B[j];
                 j--;
