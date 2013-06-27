@@ -1,3 +1,16 @@
+#include <cassert>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cstdio>
+#include <queue>
+#include <utility>
+#include <algorithm>
+#include <set>
+#include <cstring>
+
+
+using namespace std;
 // reverse
 class Solution {
 public:
@@ -15,7 +28,7 @@ public:
                 k--;
             }
 
-            while(j>=0 && ((i>=0 && A[i]<=B[j]) || i==-1 ) {
+            while(j>=0 && ((i>=0 && A[i]<=B[j]) || i==-1) ) {
 
                 A[k] = B[j];
                 j--;
@@ -23,4 +36,20 @@ public:
             }
         }
     }
+
 };
+
+int main() {
+    Solution s;
+    int A[] = {1,2,3, 0, 0, 0};
+    int B[] = {2,5,6};
+    int m = 6;
+    int n = 3;
+    cout << m << " " << n << endl;
+    s.merge(A,m,B,n);
+    for (int i=0; i<m; ++i) {
+        cout << A[i]<<endl;
+    }
+    system("PAUSE");
+    return 0;
+}
