@@ -1,69 +1,30 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
-    ListNode *deleteDuplicates(ListNode *head) {
+    int removeDuplicates(int A[], int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        if (head == NULL || head->next == NULL) {
-            return head;
-        }
-        ListNode *dummy = head;
-        ListNode *run = head;
-        bool f = false;
-        bool c = false;
-        while(run->next) {
+        if(n<=2)
+            return n;
             
-            
-                if(!f&&head->val == run->next->val) {
-                    head = run->next;
-                    run = run->next;
-                    continue;
-                } else {
-                    f=true;
-                }
-                if(f) {
-                    if(run->val == run->next->val) {
-                        run = run->next;
-                        continue;
-                    }
-                    if(dummy->val == run->val) {
-                        dummy = run->next;
-                        if(!c && head->val != dummy->val) {
-                            head->next = dummy;
-                            c=true;
-                        }
-                    } else {
-                        dummy->next = run->next;
-                        dummy = run->next;
-                    }
-    
-                    run = run->next;
-                }
-                
-            }
-
         
-        if(run) {
-            if(head->val==run->val) {
-                head=NULL;
+        vector<int> s;
+        s.push_back(A[0]);
+        s.push_back(A[1]);
+        int len=2;
+        
+        for(int i=2; i<n; i++) {
+            if(A[i] == A[i-1] && A[i] == A[i-2]) {
+                continue;
             }
-            else if(dummy->val==head->val) {
-                head->next = NULL;
-            }
-            if(dummy->val == run->val) {
-                dummy = NULL;
-            } else {
-                dummy->next = NULL;    
-            }
-            
+            s.push_back(A[i]);
+            len++;
         }
-        return head;
+        int j=0;
+        for(vector<int>::iterator it=s.begin(); it!=s.end(); it++) {
+            A[j]=*it;
+            j++;
+        }
+        return len;
+        
     }
 };
