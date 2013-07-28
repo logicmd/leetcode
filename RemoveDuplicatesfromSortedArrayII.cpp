@@ -16,26 +16,53 @@ public:
         }
         ListNode *dummy = head;
         ListNode *run = head;
+        bool f = false;
+        bool c = false;
         while(run->next) {
-            if(run->val == run->next->val) {
-                run = run->next;
-            } else {
-                if(head->val == run->val)
+            
+            
+                if(!f&&head->val == run->next->val) {
                     head = run->next;
-
-                if(dummy->val == run->val) {
-                    dummy = run->next;
+                    run = run->next;
+                    continue;
                 } else {
-                    dummy->next = run->next;
-                    dummy = run->next;
+                    f=true;
                 }
-
-                run = run->next;
+                if(f) {
+                    if(run->val == run->next->val) {
+                        run = run->next;
+                        continue;
+                    }
+                    if(dummy->val == run->val) {
+                        dummy = run->next;
+                        if(!c && head->val != dummy->val) {
+                            head->next = dummy;
+                            c=true;
+                        }
+                    } else {
+                        dummy->next = run->next;
+                        dummy = run->next;
+                    }
+    
+                    run = run->next;
+                }
+                
             }
 
-        }
+        
         if(run) {
-            dummy->next = NULL;
+            if(head->val==run->val) {
+                head=NULL;
+            }
+            else if(dummy->val==head->val) {
+                head->next = NULL;
+            }
+            if(dummy->val == run->val) {
+                dummy = NULL;
+            } else {
+                dummy->next = NULL;    
+            }
+            
         }
         return head;
     }
