@@ -1,3 +1,14 @@
+#include <cassert>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cstdio>
+#include <string>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
 class Solution {
 public:
     string countAndSay(int n) {
@@ -7,7 +18,9 @@ public:
         while(n>0) {
             v.insert(v.begin(), n%10);
             n/=10;
+
         }
+
         string s;
         int times = 0;
         int digit = -1;
@@ -15,8 +28,8 @@ public:
         {
             if(*i != digit) {
                 if(digit != -1) {
-                    s.insert(s.begin(), digit);
-                    s.insert(s.begin(), digit);
+                    s.insert(s.begin(), times+'0');
+                    s.insert(s.begin(), digit+'0');
 
                 }
 
@@ -27,11 +40,15 @@ public:
             }
         }
         if(times!=0) {
-            s.insert(s.begin(), times);
-            s.insert(s.begin(), digit);
+            s.insert(s.begin(), times+'0');
+            s.insert(s.begin(), digit+'0');
         }
 
 
         return s;
     }
 };
+int main() {
+    Solution s;
+    cout << s.countAndSay(1) << endl;
+}
