@@ -10,7 +10,7 @@
 
 
 using namespace std;
-
+// TLE
 class Solution {
 public:
     vector<int> findSubstring(string S, vector<string> &L) {
@@ -23,23 +23,20 @@ public:
         // S.size() is a unsigned int, fuck
         int s_size=S.size();
 
-        if(s_size-m*n==0) {
-            vector<string> s;
-            for(int i=0; i<m; ++i) {
-                s.push_back(S.substr(n*i,n));
-            }
-            if(isMatched(s,L))
-                pos.push_back(0);
-            return pos;
-        }
 
-        for(int i=0; i<s_size-m*n; ++i) {
+        for(int i=0; i<=s_size-m*n; ) {
             vector<string> s;
             for(int j=0; j<m; j++) {
                 s.push_back(S.substr(i+n*j,n));
             }
-            if(isMatched(s,L))
+            if(isMatched(s,L)) {
                 pos.push_back(i);
+                if(n==1)  i++;
+                else    i+=(n-1);
+
+            } else {
+                i++;
+            }
         }
         return pos;
 
@@ -66,12 +63,14 @@ public:
     }
 };
 
-
 int main() {
     Solution s;
-    string S="a";
+    string S="aaa";
     vector<string> L;
     L.push_back("a"); L.push_back("a");
-    s.findSubstring(S,L);
+    vector<int> re=s.findSubstring(S,L);
+    for(vector<int>::iterator its=re.begin(); its!=re.end(); ++its) {
+        cout << *its << endl;
+    }
     return 0;
 }
