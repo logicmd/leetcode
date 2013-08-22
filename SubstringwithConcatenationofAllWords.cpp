@@ -11,6 +11,7 @@
 
 using namespace std;
 // TLE
+// 字符串匹配常用hash
 class Solution {
 public:
     vector<int> findSubstring(string S, vector<string> &L) {
@@ -23,13 +24,21 @@ public:
         // S.size() is a unsigned int, fuck
         int s_size=S.size();
 
+        unordered_map<string, int> LL;
+        for(int i=0; i<m; i++) {
+            if(LL.find(L[i])!=LL.end()) {
+                LL[L[i]]++;
+            } else {
+                LL.insert(make_pair(L[i],0));
+            }
+        }
 
         for(int i=0; i<=s_size-m*n; ) {
             vector<string> s;
             for(int j=0; j<m; j++) {
                 s.push_back(S.substr(i+n*j,n));
             }
-            if(isMatched(s,L)) {
+            if(isMatched(s,LL)) {
                 pos.push_back(i);
                 if(n==1)  i++;
                 else    i+=(n-1);
@@ -42,7 +51,25 @@ public:
 
     }
 
-    bool isMatched(vector<string> s, vector<string> t) {
+    bool isMatched(vector<string> s, unordered_map<string,int> LL) {
+        for(int i=0; i<s.size(); ++i) {
+            if(LL.find(s[i])!=LL.end()) {
+                if(--LL[s[i]]<0) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        for(unordered_map<string,int>::iterator its=LL.begin(); its!=LL.end(); its++) {
+            if(its->second!=0)
+                return false;
+        }
+        return true;
+    }
+
+    bool isMatchedold(vector<string> s, vector<string> t) {
         int m=t.size();
         for(int i=0; i<s.size(); ++i) {
             for(vector<string>::iterator its=t.begin(); its!=t.end(); ++its) {
