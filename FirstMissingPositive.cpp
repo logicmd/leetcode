@@ -25,7 +25,6 @@ public:
             int absi=abs(A[i]);
             if(absi<=n)
                 A[absi-1]=-abs(A[absi-1]);
-            cout << "A[" << absi-1 << "]=" <<  A[absi-1] <<endl;
         }
         for(int i=0; i<n; i++) {
             if(A[i]>0)
