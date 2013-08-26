@@ -4,7 +4,7 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         if(S=="" || T=="")  return "";
-        unordered_map<string,int> TT;
+        unordered_map<char,int> TT;
         for(int i=0; i<T.size(); i++) {
             if(TT.find(T[i])==TT.end())
                 TT.insert(make_pair(T[i],1));
@@ -29,7 +29,7 @@ public:
                 s++;
                 if(e-s+1<min) {
                     min=e-s+1;
-                    str.substring(s,min);
+                    str=str.substr(s,min);
                 }
 
             }
@@ -37,8 +37,8 @@ public:
         return str;
     }
 
-    bool is_matched(unordered_map<string, int>& TT) {
-        for(unordered_map<string, int>::iterator its=TT.begin(); its!=TT.end(); its++) {
+    bool is_matched(unordered_map<char, int>& TT) {
+        for(unordered_map<char, int>::iterator its=TT.begin(); its!=TT.end(); its++) {
             if(its->second>0)
                 return false;
         }
