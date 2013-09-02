@@ -12,6 +12,8 @@
 using namespace std;
 class Solution {
 public:
+    class Solution {
+public:
     int ladderLength(string start, string end, unordered_set<string> &dict) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
@@ -49,7 +51,7 @@ public:
 
                             if (isConnect(*j, end, n))
                             {
-                                return ++times;
+                                return ++times+1;
                             }
                             st.push(*j);
                             dict.erase(j++);
@@ -67,7 +69,7 @@ public:
                 {
                     if (isConnect(*i, end, n))
                     {
-                        return times;
+                        return times+1;
                     }
                 }
                 return 0;
@@ -91,8 +93,9 @@ public:
                 }
             }
         }
-        return c==1 || c==0;
+        return c==1;
     }
+};
 };
 
 int main()

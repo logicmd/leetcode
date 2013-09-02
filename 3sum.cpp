@@ -150,3 +150,45 @@ int main()
     system("PAUSE");
     return 0;
 }
+
+
+
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        sort(num.begin(), num.end());
+        unordered_map<int, vector<int> > hash_map;
+        vector<vector<int> > ret;
+        for (int i = 0; i != num.size(); ++i) {
+            if(hash_map.find(num[i])==num.end()) {
+                vector<int> v;
+                v.push_back(i);
+                hash_map.insert(make_pair(num[i], v));
+            } else {
+                hash_map[num[i]].push_back(i);
+            }
+
+        }
+        for(int i=0; i+1<num.size(); ++i) {
+            for(int j=i+1; j<num.size(); ++j) {
+                int s=num[i]+num[j];
+                if(hash_map.find(-s)!=hash_map.end()) {
+                    vector<int> v=hash_map.find(-s)->second;
+                    for(int k=0; k<v.size(); k++) {
+                        if(v[k]>j) {
+                            vector<int> r;
+                            r.push_back(num[i]);
+                            r.push_back(num[j]);
+                            r.push_back(num[v[k]]);
+                            ret.push_back(r);
+                        }
+                    }
+                }
+            }
+        }
+        ret.resize(unique(ret.begin(), ret.end())-ret.begin());
+        return ret;
+    }
+};
