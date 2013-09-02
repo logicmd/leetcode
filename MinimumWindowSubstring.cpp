@@ -46,6 +46,7 @@ public:
                     min=e-s;
                     //cout << s << " " << min << endl;
                     str=S.substr(s,min);
+
                 }
                 s++;
 
