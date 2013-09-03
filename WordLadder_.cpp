@@ -17,7 +17,6 @@ public:
         if(start.size()!=end.size()) return false;
         if(start.size()==0 || end.size()==0)    return false;
 
-        cout << "fuck";
 
         queue<string> in, out;
         in.push(start);
@@ -25,26 +24,29 @@ public:
         while(!in.empty() && !dict.empty()) {
             while(!in.empty()) {
 
-                string cur=in.front();
-                string org=cur;
+                string org=in.front();
+                string cur=org;
                 in.pop();
                 for(int i=0; i<cur.size(); i++) {
+
                     char tmp=cur[i];
                     for(int j=0; j<'z'-'a'+1; j++) {
-                        cout << "0 " << org << "-" << cur << endl;
                         cur[i]=j+'a';
-
+                        //cout << "0 " << org << "-" << cur << endl;
+                        unordered_set<string>::iterator its=dict.find(cur);
+                        if(its!=dict.end()) {
+                            //cout << "1 " << org << "->" << *its << endl;
+                            if(*its==end)
+                                return c+1;
+                            //if(isConnect(*its, end)) {
+                            //  return c+1;
+                            //}
+                            out.push(*(its));
+                            dict.erase(its);
+                        }
                     }
                     cur[i]=tmp;
-                    unordered_set<string>::iterator its=dict.find(cur);
-                    if(its!=dict.end()) {
-                        cout << "1 " << org << "->" << *its << endl;
-                        if(isConnect(*its,end)) {
-                            return c+1;
-                        }
-                        out.push(*(its));
-                        dict.erase(its);
-                    }
+
                 }
                 // for(unordered_set<string>::iterator its=dict.begin(); its!=dict.end();) {
                 //     cout << "0 " << cur << "-" << *its << endl;
@@ -93,9 +95,9 @@ public:
 };
 
 int main() {
-    string s="leet";
-    string e="code";
-    string dic[] = {"lest","leet","lose","code","lode","robe","lost"};
+    string s="a";
+    string e="c";
+    string dic[] = {"a","b","c"};
     unordered_set<string> dict;
     for(string str:dic) {
         dict.insert(str);
