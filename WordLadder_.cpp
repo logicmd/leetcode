@@ -24,25 +24,45 @@ public:
         int c=1;
         while(!in.empty() && !dict.empty()) {
             while(!in.empty()) {
+
                 string cur=in.front();
+                string org=cur;
                 in.pop();
-                for(unordered_set<string>::iterator its=dict.begin(); its!=dict.end();) {
-                    cout << "0 " << cur << "-" << *its << endl;
-                    if(isConnect(cur, *its)) {
-                        cout << "1 " << cur << "->" << *its << endl;
-                        if(isConnect(end, *its)) {
-                            cout << "2 " << *its << "->" << end << endl;
-                            c++;
-                            return c;
-                        }
-                        out.push(*its);
-                        dict.erase(its);
-                        if((its+1)!=dict.end()) {
-                            its++;
-                        }
+                for(int i=0; i<cur.size(); i++) {
+                    char tmp=cur[i];
+                    for(int j=0; j<'z'-'a'+1; j++) {
+                        cout << "0 " << org << "-" << cur << endl;
+                        cur[i]=j+'a';
 
                     }
+                    cur[i]=tmp;
+                    unordered_set<string>::iterator its=dict.find(cur);
+                    if(its!=dict.end()) {
+                        cout << "1 " << org << "->" << *its << endl;
+                        if(isConnect(*its,end)) {
+                            return c+1;
+                        }
+                        out.push(*(its));
+                        dict.erase(its);
+                    }
                 }
+                // for(unordered_set<string>::iterator its=dict.begin(); its!=dict.end();) {
+                //     cout << "0 " << cur << "-" << *its << endl;
+                //     if(isConnect(cur, *its)) {
+                //         cout << "1 " << cur << "->" << *its << endl;
+                //         if(isConnect(end, *its)) {
+                //             cout << "2 " << *its << "->" << end << endl;
+                //             c++;
+                //             return c;
+                //         }
+                //         out.push(*its);
+                //         dict.erase(its);
+                //         if((its+1)!=dict.end()) {
+                //             its++;
+                //         }
+
+                //     }
+                // }
             }
             ++c;
             swap(in, out);
