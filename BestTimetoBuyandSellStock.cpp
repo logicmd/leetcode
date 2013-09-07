@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <string>
 #include <set>
+
 #include <algorithm>
 
 using namespace std;
@@ -17,11 +18,13 @@ public:
         int n=prices.size();
         if(n==0 || n==1)    return 0;
         int min = (1<<30 - 1)+1<<30; // 坑
+
         int max = -1<<31;
 
         int re=0;
 
         for(int i=0; i<n; i++) {
+
             if(prices[i]<min) {
                 min=prices[i];
                 max=0;
@@ -56,3 +59,4 @@ int main()
     system("PAUSE");
     return 0;
 }
+
