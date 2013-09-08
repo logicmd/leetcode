@@ -1,75 +1,31 @@
 class Solution {
 public:
-    int longestValidParentheses(string s) {
+    int lengthOfLongestSubstring(string s) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        int l=0;
-        for(int i=0; i<s.size(); ) {
-            int longestl = 1;
-            stack<char> st;
-            while (!st.empty()) st.pop();
-            //stack<char>().swap(st);
-            for(int j=2; i+j-1<s.size(); j+=2) {
-                if(is_valid(s.substr(i,j), j-2, st)) {
-                    longestl = j;
-                    if(j>l) {
-                        l = j;
-                    }
-                }
-            }
-            i+=longestl;
-        }
-        return l;
-    }
+        int n=s.size();
+        if(n==0)    return 0;
+        if(n==1)    return 1;
 
-    bool is_valid_e(string s, int k, stack<char> &st) {
-        for(int i=k; i<s.size(); ++i) {
-            if( s[i] == ')' ) {
-                if (!st.empty() && st.top() == '(' ) {
-                   st.pop();
-                } else if (st.empty()) {
-                    return false;
-                }
+        int b=0, e=1, max=0;
+        set<char> st;
+        st.insert(s[b]);
+        while(b<=e && e<n) {
+            if(st.find(s[e])==st.end()) {
+
+                st.insert(s[e]);
+                if(e<n-1)
+                    e++;
+                int l=st.size();
+                if(l>max)   max=l;
             } else {
-                st.push('(');
+                if(st.find(s[b])!=st.end())
+                    st.erase(st.find(s[b]));
+                b++;
+
+
             }
         }
-        return st.empty();
-    }
-
-    bool is_valid(string s, int k, stack<char> &st) {
-        for (int i=k; i<s.size(); ++i) {
-            if ( !st.empty() && s[i] == ')' &&  st.top() == '(' ) {
-                st.pop();
-            } else {
-                st.push(s[i]);
-            }
-        }
-        return st.empty();
-    }
-
-
-    bool is_valid(string s, stack<char> &st) {
-        for (int i=0; i<s.size(); ++i) {
-            if ( !st.empty() && s[i] == get_pair(st.top()) ) {
-                st.pop();
-            } else {
-                st.push(s[i]);
-            }
-        }
-        return st.empty();
-    }
-
-    char get_pair(char c) {
-        switch(c) {
-            case '{':
-                return '}';
-            case '(':
-                return ')';
-            case '[':
-                return ']';
-            default:
-                return ' ';
-        }
+        return max;
     }
 };

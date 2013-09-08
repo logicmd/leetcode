@@ -29,29 +29,63 @@ public:
             if(LL.find(L[i])!=LL.end()) {
                 LL[L[i]]++;
             } else {
-                LL.insert(make_pair(L[i],0));
+                LL.insert(make_pair(L[i],1));
+            }
+        }
+        for(int init=0; init<n; init++) {
+            bool f=true;
+            unordered_map<string,int> s;
+
+            for(int i=init; i<=s_size-m*n; i+=(n)) {
+                if(f) {
+                    for(int j=0; j<m; j++) {
+                        string wd=S.substr(i+n*j,n);
+                        if(s.find(wd)!=s.end()) {
+                            s[wd]++;
+                        } else {
+                            s.insert(make_pair(wd,1));
+                        }
+
+                    }
+                    f=false;
+                } else {
+                    string wd1=S.substr(i-n,n);
+                    s[wd1]--;
+                    if(s[wd1]==0) {
+                        s.erase(s.find(wd1));
+                    }
+
+                    string wd2=S.substr(i+n*(m-1),n);
+                    if(s.find(wd2)!=s.end()) {
+                        s[wd2]++;
+                    } else {
+                        s.insert(make_pair(wd2,1));
+                    }
+                }
+
+                if(isMatched(s,LL)) {
+                    pos.push_back(i);
+                }
             }
         }
 
-        for(int i=0; i<=s_size-m*n; ) {
-            vector<string> s;
-            for(int j=0; j<m; j++) {
-                s.push_back(S.substr(i+n*j,n));
-            }
-            if(isMatched(s,LL)) {
-                pos.push_back(i);
-                if(n==1)  i++;
-                else    i+=(n-1);
-
-            } else {
-                i++;
-            }
-        }
         return pos;
 
     }
 
-    bool isMatched(vector<string> s, unordered_map<string,int> LL) {
+    bool isMatched(unordered_map<string,int> s, unordered_map<string,int> LL) {
+        for(unordered_map<string,int>::iterator its=s.begin(); its!=s.end(); its++) {
+            string query=its->first;
+            if(LL.find(query)!=LL.end() && s.find(query)!=s.end() && its->second==LL[query]) {
+                ;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool isMatched_(vector<string> s, unordered_map<string,int> LL) {
         for(int i=0; i<s.size(); ++i) {
             if(LL.find(s[i])!=LL.end()) {
                 if(--LL[s[i]]<0) {
