@@ -14,39 +14,30 @@ public:
     int lengthOfLongestSubstring(string s) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        int n = s.size();
-        if(n==0)
-        {
-            return 0;
-        }
-        int num = 0;
-        int ret = 1;
+        int n=s.size();
+        if(n==0)    return 0;
+        if(n==1)    return 1;
 
-        unordered_set<char> hm;
-        for (int i = 0; i < n-1; ++i)
-        {
-            hm.clear();
-            hm.insert(s[i]);
-            num = 1;
+        int b=0, e=1, max=0;
+        set<char> st;
+        st.insert(s[b]);
+        while(b<=e && e<n) {
+            if(st.find(s[e])==st.end()) {
 
-            for (int j = i+1; j < n; ++j)
-            {
-                if (hm.find(s[j])==hm.end())
-                {
-                    hm.insert(s[j]);
-                    num++;
-                    if(num > ret)
-                    {
-                        ret = num;
-                    }
-                }
-                else
-                {
-                    break;
-                }
+                st.insert(s[e]);
+                if(e<n-1)
+                    e++;
+                int l=st.size();
+                if(l>max)   max=l;
+            } else {
+                if(st.find(s[b])!=st.end())
+                    st.erase(st.find(s[b]));
+                b++;
+
+
             }
         }
-        return ret;
+        return max;
     }
 };
 
