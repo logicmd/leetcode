@@ -11,42 +11,27 @@ public:
     ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        if(!l1)
-            return l2;
-        if(!l2)
-            return l1;
-        ListNode *head;
-        ListNode *run;
-
-        head->next = run;
+        ListNode *head = new ListNode(-1);
+        ListNode *run = head;
 
         while(l1 && l2) {
-            if(l1->val < l2->val) {
-                run->val=l1->val;
-                ListNode* newrun = new ListNode();
-                run->next = newrun;
-                run=run->next;
+            if(l1->val<l2->val) {
+                run->next=new ListNode(l1->val);
                 l1=l1->next;
             } else {
-                run->val=l2->val;
-                run->next = new *ListNode();
-                run=run->next;
+                run->next=new ListNode(l2->val);
                 l2=l2->next;
             }
+            run=run->next;
         }
 
-        while(l1) {
-            run->val=l1->val;
-            run->next = new *ListNode();
-            run=run->next;
-            l1=l1->next;
+        if(l1) {
+            run->next=l1;
+        }
+        if(l2) {
+            run->next=l2;
         }
 
-        while(l2) {
-            run->val=l2->val;
-            run->next = new *ListNode();
-            run=run->next;
-            l2=l2->next;
-        }
+        return head->next;
     }
 };
