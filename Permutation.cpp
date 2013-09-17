@@ -5,17 +5,39 @@ public:
         // DO NOT write int main() function
         vector<vector<int> > ret;
         int n=num.size();
-        ret.push_back(num);
-        if (n==1)   return ret;
+
+        if (n<=1) {
+            ret.push_back(num);
+            return ret;
+        }
+
+        bool *f=new bool[n];
+        for(int i=0; i<n; i++) {
+            f[i]=true;
+        }
+
+        vector<int> cur;
+
+        dfs(n, cur, ret, f, num);
+
+        return ret;
+    }
 
 
-        for(int i=0;i<n;i++) {
-            for(int j=i+1;j<n;j++) {
-                swap(num[i],num[j]);
-                ret.push_back(num);
-                swap(num[i],num[j]);
+    void dfs(int n, vector<int> &cur, vector<vector<int> > &res, bool f[], vector<int> &num) {
+        if(cur.size()>=n) {
+            res.push_back(cur);
+            return;
+        }
+
+        for(int i=0; i<n; i++) {
+            if(f[i]) {
+                f[i]=false;
+                cur.push_back(num[i]);
+                dfs(n, cur, res, f, num);
+                cur.pop_back();
+                f[i]=true;
             }
         }
-        return ret;
     }
 };
