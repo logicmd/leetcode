@@ -23,10 +23,15 @@ public:
 };
 
 
+
+
 int main()
 {
     //Solution* s = new Solution();
     //s->func();
+    int i = 0;
+    (i += i) > 0 ? i++ : i --;
+    cout << i << endl;
     Solution s;
     s.func();
     system("PAUSE");
