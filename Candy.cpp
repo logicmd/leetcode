@@ -4,32 +4,42 @@ public:
         // Note: The Solution object is instantiated only once and is reused by each test case.
         int n=ratings.size();
         if(n==0 || n==1)
-            return 1;
-        for(int i=0; i<n; i++) {
-            if(i)
-        }
-        unordered_map<int, int> hash_map;
-
-        for(int i=0; i<n; i++) {
-            if(hash_map.find(ratings[i])==hash_map.end()) {
-                hash_map.insert(make_pair(ratings[i], 1));
-            } else {
-                hash_map[ratings[i]]++;
+            return n;
+        int *candies=new int[n];
+        candies[0]=1;
+        for (int i=1; i<n; )
+        {
+            if(ratings[i]>ratings[i-1]) {
+                candies[i]=candies[i-1]+1;
+                ++i;
+            }
+            else if(ratings[i]==ratings[i-1]) {
+                candies[i]=1;
+                ++i;
+            }
+            else {
+                int init=i-1;
+                int original=candies[i-1];
+                while(i<n && ratings[i]<ratings[i-1]) {
+                    i++;
+                }
+                int c=1;
+                for(int j=i-1; j>=init; j--) {
+                    candies[j]=c;
+                    c++;
+                }
+                candies[init]=max(original, c-1);
             }
         }
-
-        sort(ratings.begin(), ratings.end());
-        ratings.erase(unique(ratings.begin(), ratings.end()), ratings.end());
-        int c=1;
-        int res=0;
-        for(int i=0; i<n; i++) {
-            res+=c*hash_map[ratings[i]];
-            c++;
-        }
-        return res;
+        int sum=0;
+        for(int i=0; i<n; i++)
+            sum+=candies[i];
+        return sum;
     }
 };
 
+// O(1) space candy
+// O(1) 时间反而长，太墨迹了，可读性好差
 
 class Solution {
 public:
@@ -38,47 +48,42 @@ public:
         int n=ratings.size();
         if(n==0 || n==1)
             return n;
-        //vector<int> candies;
-        int cur=1;
-        int res=0;
-        int flag=0;
-        for(int i=0; i<n-1; i++) {
-            if(ratings[i+1]>=ratings[i]) {
-                //candies[i]=cur;
-                //candies.push_back(cur);
-                res+=cur;
-                if(ratings[i+1]>ratings[i])
-                    cur++;
-            } else {
-                int j=i;
-                stack<int> st;
-                //st.push(ratings[j]);
-                while(j+1<n && ratings[j+1]<ratings[j]) {
-                    st.push(ratings[j+1]);
-                    j++;
+        int sum=1;
+        int last=1;
+        int cur;
+        for (int i=1; i<n; )
+        {
+            if(ratings[i]>ratings[i-1]) {
+                cur=last+1;
+                sum+=cur;
+                last=cur;
+                ++i;
+            }
+            else if(ratings[i]==ratings[i-1]) {
+                cur=1;
+                sum+=cur;
+                last=1;
+                ++i;
+            }
+            else {
+                int init=i-1;
+                int original=last;
+                while(i<n && ratings[i]<ratings[i-1]) {
+                    i++;
                 }
-
                 int c=1;
-                int part=1;
-                //st.pop();
-                //part+=c;
-                while(++c && !st.empty()) {
-                    st.pop();
-                    part+=c;
+                for(int j=i-1; j>=init; j--) {
+                    sum+=c;
+                    c++;
                 }
-                part+=max(cur,c);
-                i=j+2;
-                res+=part;
-                if(i<n) {
-                    flag=1;
-                    if(ratings[i]>ratings[i-1]) {
-                        cur=2;
-                    } else {
-                        cur=1;
-                    }
-                }
+                if(original>c-1)
+                    sum-=(c-1);
+                else
+                    sum-=original;
+                last=1;
             }
         }
-        return res+cur*flag;
+
+        return sum;
     }
 };

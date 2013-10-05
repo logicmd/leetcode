@@ -8,7 +8,7 @@ public:
         for(int i=0; i<32; i++) {
             count[i]=0;
             for(int j=0; j<n; j++) {
-                count[i]+=((A[j]>>i)%2);
+                count[i]+=((A[j]>>i)&1);
             }
             if(count[i]%3!=0) {
                 res+=(1<<i);
