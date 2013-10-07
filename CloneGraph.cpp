@@ -14,42 +14,29 @@ public:
             return NULL;
         UndirectedGraphNode *newnode = new UndirectedGraphNode(node->label);
         UndirectedGraphNode *run = newnode;
-        unordered_map<int, UndirectedGraphNode*> hash_map;
-        queue<UndirectedGraphNode *> q;
+        unordered_map<int, UndirectedGraphNode*> hashmap;
         queue<UndirectedGraphNode *> qq;
-        for(int i=0; i<node->neighbors.size(); i++) {
-            UndirectedGraphNode *neighbor;
-            if(hash_map.find(node->neighbors[i]->label)==hash_map.end()) {
-                neighbor = new UndirectedGraphNode(node->neighbors[i]->label);
-                hash_map.insert(make_pair(neighbor->label,neighbor));
-            } else {
-                neighbor = hash_map[node->neighbors[i]->label];
 
-            }
-            q.push(neighbor);
-            qq.push(node->neighbors[i]);
-            run->neighbors.push_back(neighbor);
-        }
+        qq.push(node); // IMPORTANT!
+        hashmap.insert(make_pair(newnode->label, newnode)); // IMPORTANT!
 
-        while(!q.empty()) {
+        while(!qq.empty()) {
             UndirectedGraphNode *cur=qq.front();
             qq.pop();
 
-            run=q.front();
-            q.pop();
+            run=hashmap[cur->label];
 
             for(int i=0; i<cur->neighbors.size(); i++) {
-                UndirectedGraphNode *neighbor;
-                if(hash_map.find(cur->neighbors[i]->label)==hash_map.end()) {
-                    neighbor = new UndirectedGraphNode(cur->neighbors[i]->label);
-                    hash_map.insert(make_pair(neighbor->label,neighbor));
+                UndirectedGraphNode *m_neighbor;
+                if(hashmap.find(cur->neighbors[i]->label)==hashmap.end()) {
+                    m_neighbor = new UndirectedGraphNode(cur->neighbors[i]->label);
+                    hashmap.insert(make_pair(m_neighbor->label, m_neighbor));
+                    qq.push(cur->neighbors[i]); // IMPORTANT!
                 } else {
-                    neighbor = hash_map[cur->neighbors[i]->label];
-
+                    m_neighbor = hashmap[cur->neighbors[i]->label];
                 }
-                q.push(neighbor);
-                qq.push(cur->neighbors[i]);
-                run->neighbors.push_back(neighbor);
+
+                run->neighbors.push_back(m_neighbor);
             }
         }
 
